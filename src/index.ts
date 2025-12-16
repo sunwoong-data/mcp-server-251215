@@ -11,7 +11,7 @@ export const configSchema = z.object({
 type Config = z.infer<typeof configSchema>
 
 // Smithery 배포를 위한 createServer 함수
-export default function createServer({ config }: { config: Config }) {
+export default function createServer({ config }: { config?: Config } = {}) {
 const server = new McpServer({
         name: 'mcp-server-251215',
     version: '1.0.0'
