@@ -4,7 +4,7 @@ import { InferenceClient } from '@huggingface/inference'
 
 // Smithery configSchema: 사용자 설정을 위한 스키마
 export const configSchema = z.object({
-    HF_TOKEN: z.string().describe('Hugging Face API 토큰 (이미지 생성에 필요)')
+    HF_TOKEN: z.string().optional().describe('Hugging Face API 토큰 (이미지 생성에 필요, 선택사항)')
 })
 
 // 설정 타입 정의
@@ -474,9 +474,9 @@ server.registerTool(
         async ({ prompt }) => {
             try {
                 // config에서 Hugging Face 토큰 가져오기
-                const hfToken = config.HF_TOKEN
+                const hfToken = config?.HF_TOKEN
                 if (!hfToken) {
-                    throw new Error('HF_TOKEN이 설정되지 않았습니다. Hugging Face 토큰을 설정해주세요.')
+                    throw new Error('HF_TOKEN이 설정되지 않았습니다. 이미지 생성을 사용하려면 Hugging Face 토큰을 설정해주세요.')
                 }
 
                 // Inference Client 생성
